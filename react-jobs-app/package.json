@@ -20,7 +20,7 @@
   },
   "scripts": {
     "start": "node start",
-    "build": "CI= react-scripts build",
+    "build": "set \"INLINE_RUNTIME_CHUNK=false\" && CI= react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
