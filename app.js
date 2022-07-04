@@ -6,6 +6,7 @@ const helmet = require('helmet');
 const cors = require('cors');
 const xss = require('xss-clean');
 const rateLimiter = require('express-rate-limit');
+const path = require('path')
 
 // Swagger
 const swaggerUI = require('swagger-ui-express');
@@ -31,10 +32,16 @@ app.use(
     max: 100, // limit each IP to 100 requests per windowMs
   })
 );
+
 app.use(express.json());
 app.use(helmet());
 app.use(cors());
 app.use(xss());
+
+app.use(express.static(path.join(__dirname, 'react-jobs-app/build')))
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname + '/react-jobs-app/build/index.html'))
+})
 
 app.get('/', (req, res) => {
   res.send('<h1>Jobs API</h1><a href="/api-docs">Documentation</a>');
